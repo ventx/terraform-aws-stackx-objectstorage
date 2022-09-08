@@ -1,46 +1,310 @@
-# stackx-template-terraform
+<h1 align="center">
+  <a href="https://github.com/ventx/terraform-aws-stackx-objectstorage">
+    <!-- Please provide path to your logo here -->
+    <img src="https://raw.githubusercontent.com/ventx/terraform-aws-stackx-objectstorage/main/docs/images/logo.svg" alt="Logo" width="100" height="100">
+  </a>
+</h1>
 
-Template repository for Terraform used by all our stackx GitHub repositories.
+<div align="center">
+  ventx/terraform-aws-stackx-objectstorage
+  <br />
+  <a href="#about"><strong>Explore the diagrams »</strong></a>
+  <br />
+  <br />
+  <a href="https://github.com/ventx/terraform-aws-stackx-objectstorage/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
+  ·
+  <a href="https://github.com/ventx/terraform-aws-stackx-objectstorage/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
+  ·
+  <a href="https://github.com/ventx/terraform-aws-stackx-objectstorage/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+">Ask a Question</a>
+</div>
 
-This repo will be synced with the
-[AndreasAugustin/actions-template-sync](https://github.com/AndreasAugustin/actions-template-sync) GitHub Action.
+<div align="center">
+<br />
+
+[![Project license](https://img.shields.io/github/license/ventx/terraform-aws-stackx-objectstorage.svg?style=flat-square)](LICENSE)
+
+[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/ventx/terraform-aws-stackx-objectstorage/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+[![code with love by ventx](https://img.shields.io/badge/%3C%2F%3E%20with%20♥%20by-ventx-blue)](https://github.com/ventx)
+
+</div>
+
+<details open>
+<summary>Table of Contents</summary>
+
+- [About](#about)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Quickstart](#quickstart)
+- [Usage](#usage)
+- [Support](#support)
+- [Project assistance](#project-assistance)
+- [Contributing](#contributing)
+- [Authors & contributors](#authors--contributors)
+- [Security](#security)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+- [Roadmap](#roadmap)
+
+</details>
+
+---
+
+## About
+
+> Creates and object storage bucket in AWS S3.
+> Supports common lifecycle patterns for soft and hard deletion/removal.
+> Disabled all public access by default. -- Part of stackx.
 
 
-## Requirements
-
-### Secrets
-During setup of the new GitHub repository, set these [Secrets for GitHub Actions](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository):
-
-* `INFRACOST_API_KEY` ([Infracost](https://www.infracost.io))
-* `LOCALSTACK_API_KEY` ([LocalStack](https://localstack.cloud))
-* `PERSONAL_ACCESS_TOKEN` (GitHub Personal Access Token with `workflow` scope)
-
-> For modules without LocalStack support, please set `LOCALSTACK_API_KEY` 
-> to `false`
+<details>
+<summary>ℹ️ Architecture Diagrams</summary>
+<br>
 
 
-### Diagrams
+|                                Placeholder                                 |                                                            Rover                                                            |
+|:-------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------:|
+| <img src="https://raw.githubusercontent.com/ventx/terraform-aws-stackx-objectstorage/main/docs/images/screenshot1.png" title="Placeholder" width="100%"> | <img src="https://raw.githubusercontent.com/ventx/terraform-aws-stackx-objectstorage/main/docs/images/screenshot2.png" title="Rover" width="100%"> |
 
-Add a `diagram.py` in `docs/images` to automatically generate a 
-[diagram as code](https://diagrams.mingrammer.com).
+</details>
 
-The required syntax (replace `repository-name` accordingly:
 
-```python
-with Diagram("repository-name", outformat="png", filename="screenshot1", show=False):
+### Built With
+
+<no value>
+
+
+## Getting Started
+
+### Prerequisites
+
+
+* AWS credentials
+* Terraform
+
+### Quickstart
+
+To get started, clone the projects, check all configurable [Inputs](#inputs) and deploy everything with `make`.
+
+```shell
+git clone https://github.com/ventx/stackx-terraform-aws-objectstorage.git
+make all # init, validate, plan, apply
 ```
 
 
-### README
 
-Create a `README.yaml` in the `docs/` subdirectory, which will be used in the 
-[stackx-action-readme-templates](https://github.com/ventx/stackx-action-readme-templates) 
-GitHub Action to generate the final README.md file.
+## Usage
 
 
-### Pull Request Labels
+You can run this module in conjunction with other stackx components (recommended) or as single-use (build your own).
 
-Add the following labels to your repository if they are not already there:
+Deployment time: around 1 minute
+```shell
+  make apply  2.11s user 0.49s system 6% cpu 37.315 total
+```
 
-* `chore`
-* `template-sync`
+### stackx (RECOMMENDED)
+
+This is just a bare minimum example of how to use the module.
+See all available stackx modules here: https://github.com/ventx
+
+
+```hcl
+  module "aws-objectstorage" {
+    source          = "ventx/stackx-objectstorage/aws"
+    version     = "0.1.0" // Pinned and tested version, generated by {x-release-please-version}
+  }
+```
+
+### Single-Use
+
+```hcl
+  module "aws-objectstorage" {
+    source = "ventx/stackx-objectstorage/aws"
+    version     = "0.1.0" // Pinned and tested version, generated by {x-release-please-version}
+    cluster_version = "1.22"
+    subnet_ids = ["subnet-1", "subnet-2", "subnet-3"]
+  }
+```
+
+
+
+
+## Terraform
+
+
+
+### Features
+
+
+* Simple and easy to use, just the bare minimum
+* Control-Plan logs ingested to CloudWatch via KMS encryption
+* IAM OIDC provider to be used with EKS IRSA
+
+### Resources
+
+
+* EKS
+* IAM OIDC provider
+* SecurityGroup
+* SecurityGroup rules
+* KMS Key
+* KMS Key Alias
+
+### Opinions
+
+Our Terraform modules are are highly opionated:
+
+* Keep modules small, focused, simple and easy to understand
+* Prefer simple code over complex code
+* Prefer [KISS](https://en.wikipedia.org/wiki/KISS_principle) > [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+* Set some sane default values for variables, but do not set a default value if user input is strictly required
+
+
+These opinions can be seen as some _"soft"_ rules but which are not strictly required.
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.29.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_s3_bucket.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
+| [aws_s3_bucket_acl.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_acl) | resource |
+| [aws_s3_bucket_lifecycle_configuration.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_lifecycle_configuration) | resource |
+| [aws_s3_bucket_logging.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_logging) | resource |
+| [aws_s3_bucket_policy.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy) | resource |
+| [aws_s3_bucket_public_access_block.block_public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) | resource |
+| [aws_s3_bucket_server_side_encryption_configuration.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_server_side_encryption_configuration) | resource |
+| [aws_s3_bucket_versioning.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_versioning) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_block_public_acls"></a> [block\_public\_acls](#input\_block\_public\_acls) | Whether Amazon S3 should block public ACLs for this bucket. | `bool` | `true` | no |
+| <a name="input_block_public_policy"></a> [block\_public\_policy](#input\_block\_public\_policy) | Whether Amazon S3 should block public bucket policies for this bucket | `bool` | `true` | no |
+| <a name="input_bucket_acl"></a> [bucket\_acl](#input\_bucket\_acl) | The canned ACL to apply. We recommend `private` to avoid exposing sensitive information | `string` | `"private"` | no |
+| <a name="input_bucket_policy"></a> [bucket\_policy](#input\_bucket\_policy) | A valid bucket policy JSON document. Note that if the policy document is not specific enough (but still valid), Terraform may view the policy as constantly changing in a terraform plan. In this case, please make sure you use the verbose/specific version of the policy | `string` | `""` | no |
+| <a name="input_current_expiration_days"></a> [current\_expiration\_days](#input\_current\_expiration\_days) | Specifies when noncurrent object versions expire (e.g. '365' => 365d => 1y) | `number` | `365` | no |
+| <a name="input_current_expiration_enabled"></a> [current\_expiration\_enabled](#input\_current\_expiration\_enabled) | Enable or disable the expiration (deletion) lifecycle rule | `bool` | `false` | no |
+| <a name="input_current_expiration_prefix"></a> [current\_expiration\_prefix](#input\_current\_expiration\_prefix) | Prefix identifying one or more objects to which the expiration rule applies | `string` | `""` | no |
+| <a name="input_current_hard_prefix"></a> [current\_hard\_prefix](#input\_current\_hard\_prefix) | Prefix identifying one or more objects to which the hard rule applies | `string` | `""` | no |
+| <a name="input_current_hard_rule_enabled"></a> [current\_hard\_rule\_enabled](#input\_current\_hard\_rule\_enabled) | Enable or disable the hard lifecycle rule | `bool` | `false` | no |
+| <a name="input_current_hard_transition_days"></a> [current\_hard\_transition\_days](#input\_current\_hard\_transition\_days) | Number of days to persist in the standard storage tier before moving to another (e.g. Glacier) tier (e.g. '180' => 180d => 6m) | `number` | `180` | no |
+| <a name="input_current_hard_transition_storage_class"></a> [current\_hard\_transition\_storage\_class](#input\_current\_hard\_transition\_storage\_class) | Storage Class to move objects after noncurrent\_version\_hard\_transition\_days (e.g. 'GLACIER', 'STANDARD\_IA') | `string` | `"GLACIER"` | no |
+| <a name="input_current_soft_prefix"></a> [current\_soft\_prefix](#input\_current\_soft\_prefix) | Prefix identifying one or more objects to which the soft rule applies (e.g. '*' applies to all ) | `string` | `""` | no |
+| <a name="input_current_soft_rule_enabled"></a> [current\_soft\_rule\_enabled](#input\_current\_soft\_rule\_enabled) | Enable or disable the soft lifecycle rule | `bool` | `false` | no |
+| <a name="input_current_soft_transition_days"></a> [current\_soft\_transition\_days](#input\_current\_soft\_transition\_days) | Number of days to persist in the standard storage tier before moving to another (e.g. IA) tier (e.g. '90' => 90d => 3m) | `number` | `90` | no |
+| <a name="input_current_soft_transition_storage_class"></a> [current\_soft\_transition\_storage\_class](#input\_current\_soft\_transition\_storage\_class) | Storage Class to move objects after noncurrent\_version\_soft\_transition\_days (e.g. 'GLACIER', 'STANDARD\_IA') | `string` | `"STANDARD_IA"` | no |
+| <a name="input_force_destroy"></a> [force\_destroy](#input\_force\_destroy) | A boolean string that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable | `bool` | `false` | no |
+| <a name="input_ignore_public_acls"></a> [ignore\_public\_acls](#input\_ignore\_public\_acls) | Whether Amazon S3 should ignore public ACLs for this bucket | `bool` | `true` | no |
+| <a name="input_name"></a> [name](#input\_name) | Base Name for all resources (preferably generated by terraform-null-label) | `string` | `"stackx-bucket"` | no |
+| <a name="input_noncurrent_expiration_days"></a> [noncurrent\_expiration\_days](#input\_noncurrent\_expiration\_days) | Noncurrent versions: Specifies when noncurrent object versions expire (e.g. '365' => 365d => 1y) | `number` | `365` | no |
+| <a name="input_noncurrent_expiration_enabled"></a> [noncurrent\_expiration\_enabled](#input\_noncurrent\_expiration\_enabled) | Noncurrent versions: Enable or disable the expiration (deletion) lifecycle rule | `bool` | `false` | no |
+| <a name="input_noncurrent_expiration_prefix"></a> [noncurrent\_expiration\_prefix](#input\_noncurrent\_expiration\_prefix) | Noncurrent versions: Prefix identifying one or more objects to which the expiration rule applies | `string` | `""` | no |
+| <a name="input_noncurrent_hard_prefix"></a> [noncurrent\_hard\_prefix](#input\_noncurrent\_hard\_prefix) | Noncurrent versions: Prefix identifying one or more objects to which the hard rule applies | `string` | `""` | no |
+| <a name="input_noncurrent_hard_rule_enabled"></a> [noncurrent\_hard\_rule\_enabled](#input\_noncurrent\_hard\_rule\_enabled) | Noncurrent versions: Enable or disable the hard lifecycle rule | `bool` | `false` | no |
+| <a name="input_noncurrent_hard_transition_days"></a> [noncurrent\_hard\_transition\_days](#input\_noncurrent\_hard\_transition\_days) | Noncurrent versions: Number of days to persist in the standard storage tier before moving to another (e.g. Glacier) tier (e.g. '180' => 180d => 6m) | `number` | `180` | no |
+| <a name="input_noncurrent_hard_transition_storage_class"></a> [noncurrent\_hard\_transition\_storage\_class](#input\_noncurrent\_hard\_transition\_storage\_class) | Noncurrent versions: Storage Class to move objects after noncurrent\_version\_hard\_transition\_days (e.g. 'GLACIER', 'STANDARD\_IA') | `string` | `"GLACIER"` | no |
+| <a name="input_noncurrent_soft_prefix"></a> [noncurrent\_soft\_prefix](#input\_noncurrent\_soft\_prefix) | Noncurrent versions: Prefix identifying one or more objects to which the soft rule applies | `string` | `""` | no |
+| <a name="input_noncurrent_soft_rule_enabled"></a> [noncurrent\_soft\_rule\_enabled](#input\_noncurrent\_soft\_rule\_enabled) | Noncurrent versions: Enable or disable the soft lifecycle rule | `bool` | `false` | no |
+| <a name="input_noncurrent_soft_transition_days"></a> [noncurrent\_soft\_transition\_days](#input\_noncurrent\_soft\_transition\_days) | Noncurrent versions: Number of days to persist in the standard storage tier before moving to another (e.g. IA) tier (e.g. '90' => 90d => 3m) | `number` | `90` | no |
+| <a name="input_noncurrent_soft_transition_storage_class"></a> [noncurrent\_soft\_transition\_storage\_class](#input\_noncurrent\_soft\_transition\_storage\_class) | Noncurrent versions: Storage Class to move objects after noncurrent\_version\_soft\_transition\_days (e.g. 'GLACIER', 'STANDARD\_IA') | `string` | `"STANDARD_IA"` | no |
+| <a name="input_restrict_public_buckets"></a> [restrict\_public\_buckets](#input\_restrict\_public\_buckets) | Whether Amazon S3 should restrict public bucket policies for this bucket | `bool` | `true` | no |
+| <a name="input_sse_algorithm"></a> [sse\_algorithm](#input\_sse\_algorithm) | The server-side encryption algorithm to use. Valid values are `AES256` and `aws:kms` | `string` | `"AES256"` | no |
+| <a name="input_static_unique_id"></a> [static\_unique\_id](#input\_static\_unique\_id) | Static unique ID, defined in the root module once, to be suffixed to all resources for uniqueness (if you choose uuid / longer id, some resources will be cut of at max length - empty means disable and NOT add unique suffix) | `string` | `""` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | User specific Tags / Labels to attach to resources (will be merged with module tags) | `map(string)` | `{}` | no |
+| <a name="input_target_bucket"></a> [target\_bucket](#input\_target\_bucket) | Bucket to use for bucket logging as the target to send logs to | `string` | `""` | no |
+| <a name="input_target_prefix"></a> [target\_prefix](#input\_target\_prefix) | Bucket Logging prefix to use - if empty it will be set to `var.name/` (name of the bucket) | `string` | `""` | no |
+| <a name="input_versioning_enabled"></a> [versioning\_enabled](#input\_versioning\_enabled) | A state of versioning. Versioning is a means of keeping multiple variants of an object in the same bucket | `bool` | `true` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_s3_bucket_arn"></a> [s3\_bucket\_arn](#output\_s3\_bucket\_arn) | Bucket ARN |
+| <a name="output_s3_bucket_domain_name"></a> [s3\_bucket\_domain\_name](#output\_s3\_bucket\_domain\_name) | FQDN of Bucket |
+| <a name="output_s3_bucket_id"></a> [s3\_bucket\_id](#output\_s3\_bucket\_id) | Bucket Name (aka ID) |
+| <a name="output_s3_bucket_region"></a> [s3\_bucket\_region](#output\_s3\_bucket\_region) | AWS Region of Bucket |
+| <a name="output_s3_bucket_regional_domain_name"></a> [s3\_bucket\_regional\_domain\_name](#output\_s3\_bucket\_regional\_domain\_name) | Regional FQDN\_ of Bucket |
+<!-- END_TF_DOCS -->
+
+
+
+## Support
+
+If you need professional support directly by the maintainers of the project, don't hesitate to contact us:
+<a href="https://www.ventx.de/kontakt.html">
+  <img align="center" src="https://i.imgur.com/OoCRUwz.png" alt="ventx Contact Us Kontakt" />
+</a>
+
+- [GitHub issues](https://github.com/ventx/terraform-aws-stackx-objectstorage/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+)
+- Contact options listed on [this GitHub profile](https://github.com/hajowieland)
+
+
+## Project assistance
+
+If you want to say **thank you** or/and support active development of terraform-aws-stackx-objectstorage:
+
+- Add a [GitHub Star](https://github.com/ventx/terraform-aws-stackx-objectstorage) to the project.
+- Tweet about the terraform-aws-stackx-objectstorage.
+- Write interesting articles about the project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or your personal blog.
+
+Together, we can make terraform-aws-stackx-objectstorage **better**!
+
+
+
+
+## Contributing
+
+First off, thanks for taking the time to contribute! Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody else and are **greatly appreciated**.
+
+Please read [our contribution guidelines](.github/CONTRIBUTING.md), and thank you for being involved!
+
+
+## Security
+
+terraform-aws-stackx-objectstorage follows good practices of security, but 100% security cannot be assured.
+terraform-aws-stackx-objectstorage is provided **"as is"** without any **warranty**. Use at your own risk.
+
+_For more information and to report security issues, please refer to our [security documentation](.github/SECURITY.md)._
+
+
+## License
+
+This project is licensed under the **Apache 2.0 license**.
+
+See [LICENSE](LICENSE) for more information.
+
+
+## Acknowledgements
+
+* All open source contributors who made this possible
+
+
+## Roadmap
+
+See the [open issues](https://github.com/ventx/terraform-aws-stackx-objectstorage/issues) for a list of proposed features (and known issues).
+
+- [Top Feature Requests](https://github.com/ventx/terraform-aws-stackx-objectstorage/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Top Bugs](https://github.com/ventx/terraform-aws-stackx-objectstorage/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Newest Bugs](https://github.com/ventx/terraform-aws-stackx-objectstorage/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
+
+
