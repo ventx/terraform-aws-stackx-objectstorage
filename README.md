@@ -175,7 +175,7 @@ These opinions can be seen as some _"soft"_ rules but which are not strictly req
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.29.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.30.0 |
 
 ## Modules
 
